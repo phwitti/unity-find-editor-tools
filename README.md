@@ -1,2 +1,2 @@
 # unity-command-palette
-Small Command Palette Tool for Unity
+Command Palette for Unity
