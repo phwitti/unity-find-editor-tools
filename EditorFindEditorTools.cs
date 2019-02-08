@@ -69,6 +69,8 @@ public class EditorFindEditorTools : EditorWindow, IHasCustomMenu
 
     private void OnGUI()
     {
+        InputType eInputType = this.UpdateEventBeforeDraw(Event.current);
+
         EditorGUI.BeginChangeCheck();
         {
             EditorGUILayout.BeginHorizontal();
@@ -77,11 +79,16 @@ public class EditorFindEditorTools : EditorWindow, IHasCustomMenu
 
                 GUI.SetNextControlName(sFindSearchFieldControlName);
                 m_sSearchString = EditorGUILayout.TextField(m_sSearchString, GUI.skin.FindStyle("ToolbarSeachTextField"));
-                if (GUILayout.Button("", GUI.skin.FindStyle("ToolbarSeachCancelButton")))
+
+                if (GUILayout.Button(string.Empty, GUI.skin.FindStyle("ToolbarSeachCancelButton")) && m_sSearchString != string.Empty)
                 {
-                    m_sSearchString = "";
+                    Event evt = new Event();
+                    evt.type = EventType.KeyDown;
+                    evt.keyCode = KeyCode.Escape;
+                    this.SendEvent(evt);
                 }
-                if (!m_bInit)
+
+                if (!m_bInit || eInputType == InputType.Clear)
                 {
                     EditorGUI.FocusTextInControl(sFindSearchFieldControlName);
                     m_bInit = true;
@@ -130,7 +137,7 @@ public class EditorFindEditorTools : EditorWindow, IHasCustomMenu
             bool bSelected = (i == m_iSelected);
 
             Rect rect = new Rect(
-                c_fFavoriteButtonWidth, 
+                c_fFavoriteButtonWidth,
                 c_fButtonStartPosition + j * c_fButtonHeight,
                 rectPosition.width - (bScrollbar ? c_fSrollbarWidth : 0.0f) - c_fFavoriteButtonWidth,
                 c_fButtonHeight - 1.0f
@@ -146,7 +153,7 @@ public class EditorFindEditorTools : EditorWindow, IHasCustomMenu
 
         //
 
-        this.UpdateEvent(Event.current, iBase, bScrollbar);
+        this.UpdateEventAfterDraw(Event.current, eInputType, iBase, bScrollbar);
     }
 
     //
@@ -210,10 +217,102 @@ public class EditorFindEditorTools : EditorWindow, IHasCustomMenu
         this.Close();
     }
 
-    private void UpdateEvent(Event _event, int _iCurrentBase, bool _bScrollbar)
+    private InputType UpdateEventBeforeDraw(Event _event)
+    {
+        if (_event == null)
+            return InputType.None;
+
+        switch (_event.type)
+        {
+
+            case EventType.KeyDown:
+
+                switch (_event.keyCode)
+                {
+                    case KeyCode.Return:
+
+                        _event.Use();
+                        return InputType.Execute;
+
+                    case KeyCode.DownArrow:
+
+                        _event.Use();
+                        return InputType.SelectionDown;
+
+
+                    case KeyCode.UpArrow:
+
+                        _event.Use();
+                        return InputType.SelectionUp;
+
+                    case KeyCode.Escape:
+
+                        if (m_sSearchString == string.Empty)
+                        {
+                            _event.Use();
+                            this.Close();
+                            return InputType.Close;
+                        }
+                        else
+                        {
+                            return InputType.Clear;
+                        }
+                }
+
+                break;
+
+            default:
+                break;
+        }
+
+        return InputType.None;
+    }
+
+    private void UpdateEventAfterDraw(Event _event, InputType _inputType, int _iCurrentBase, bool _bScrollbar)
     {
         if (_event == null)
             return;
+
+        switch (_inputType)
+        {
+            case InputType.Close:
+
+                return;
+
+            case InputType.Execute:
+
+                if (m_iSelected < m_iMenuCommandsFilteredCount)
+                {
+                    this.ExecuteCommand(m_lMenuCommandsFiltered[m_iSelected]);
+                }
+
+                return;
+
+            case InputType.SelectionDown:
+
+                m_iSelected = Mathf.Clamp(m_iSelected + 1, 0, m_iMenuCommandsFilteredCount - 1);
+                if (_bScrollbar)
+                {
+                    this.CheckScrollToSelected();
+                }
+                this.Repaint();
+
+                return;
+
+            case InputType.SelectionUp:
+
+                m_iSelected = Mathf.Clamp(m_iSelected - 1, 0, m_iMenuCommandsFilteredCount - 1);
+                if (_bScrollbar)
+                {
+                    this.CheckScrollToSelected();
+                }
+                this.Repaint();
+
+                return;
+
+            default:
+                break;
+        }
 
         switch (_event.type)
         {
@@ -230,39 +329,6 @@ public class EditorFindEditorTools : EditorWindow, IHasCustomMenu
                     {
                         this.ToggleFavorite(m_lMenuCommandsFiltered[iIndex]);
                     }
-                }
-
-                break;
-
-            case EventType.KeyUp:
-
-                switch (_event.keyCode)
-                {
-                    case KeyCode.Return:
-                        if (m_iSelected < m_iMenuCommandsFilteredCount)
-                        {
-                            this.ExecuteCommand(m_lMenuCommandsFiltered[m_iSelected]);
-                        }
-                        break;
-                    case KeyCode.DownArrow:
-                        m_iSelected = Mathf.Clamp(m_iSelected + 1, 0, m_iMenuCommandsFilteredCount - 1);
-                        if (_bScrollbar)
-                        {
-                            this.CheckScrollToSelected();
-                        }
-                        this.Repaint();
-                        break;
-                    case KeyCode.UpArrow:
-                        m_iSelected = Mathf.Clamp(m_iSelected - 1, 0, m_iMenuCommandsFilteredCount - 1);
-                        if (_bScrollbar)
-                        {
-                            this.CheckScrollToSelected();
-                        }
-                        this.Repaint();
-                        break;
-                    case KeyCode.Escape:
-                        this.Close();
-                        break;
                 }
 
                 break;
@@ -492,6 +558,16 @@ public class EditorFindEditorTools : EditorWindow, IHasCustomMenu
     //
 
     // Helper
+
+    private enum InputType
+    {
+        None,
+        Clear,
+        Close,
+        Execute,
+        SelectionDown,
+        SelectionUp,
+    }
 
     public class ToolUsage
     {
