@@ -1,4 +1,4 @@
-# Find Editor Tools (Unity)
+# Find Editor Tools (Unity) (Command Palette for Unity)
 Adds a shortcut to unity on Ctrl+T (like 'Tools') to open a command palette that includes all commands that are available in the menu (including all the custom menu-items that are added in your personal project).
 
 Due to thousands of Editor-Tools in our projects at Mimimi Games, we needed a way to not loose track of them and find them more quickly -- this tool is the answer to that. All code is in one file and pretty straight-forward, so feel free to adjust it to your preferences.
