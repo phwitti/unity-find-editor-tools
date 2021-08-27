@@ -8,7 +8,7 @@ Due to thousands of Editor-Tools in our projects at Mimimi Games, we needed a wa
 - Automatically 'Rates' items that are used more often and pushes them to the top
 - One can additionally Pin/Favorite items, so they're always shown at the top
 
-![Image of find-editor-tools](https://phwitti.com/files/find-editor-tools-preview.gif)
+![Image of find-editor-tools](https://phwitti.com/files/find-editor-tools-preview-20210827.gif)
 
 ## Installation
 - Copy the repository-URL (by clicking the green "Code"-Button in github and copying the https URL)
