@@ -13,7 +13,7 @@ public class EditorFindEditorTools : EditorWindow, IHasCustomMenu
 
     //
 
-    private const string c_sEditorPrefsPath = "phwitti.unity.find_editor_tools";
+    private const string c_sEditorPrefsPath = "com.phwitti.unity-find-editor-tools";
 
     private bool m_bInit = false;
     private int m_iSelected = 0;

@@ -1,0 +1,17 @@
+{
+    "name": "Phwitti.FindEditorTools.Editor",
+    "references": [
+        "GUID:00dd375fb5604da41bb47ce1537a228b"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
