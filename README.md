@@ -10,6 +10,13 @@ Due to thousands of Editor-Tools in our projects at Mimimi Games, we needed a wa
 
 ![Image of find-editor-tools](https://phwitti.com/files/find-editor-tools-preview.gif)
 
+## Installation
+- Copy the repository-URL (by clicking the green "Code"-Button in github and copying the https URL)
+- Open the package manager in Unity (Window/Package Manager)
+- Click on the add (+) Button in the Status-Bar
+- Choose "Add package from git URL..."
+- Paste the repository-URL and click "Add"
+
 ## (Un)License
 
 This is free and unencumbered software released into the public domain.
