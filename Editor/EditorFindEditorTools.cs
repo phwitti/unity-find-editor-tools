@@ -1,3 +1,4 @@
+﻿// Philipp @ desperados_unity
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -13,7 +14,7 @@ public class EditorFindEditorTools : EditorWindow, IHasCustomMenu
 
     //
 
-    private const string c_sEditorPrefsPath = "phwitti.unity.find_editor_tools";
+    private const string c_sEditorPrefsPath = "com.phwitti.unity-find-editor-tools";
 
     private bool m_bInit = false;
     private int m_iSelected = 0;
@@ -30,9 +31,9 @@ public class EditorFindEditorTools : EditorWindow, IHasCustomMenu
     private static readonly string[] c_arDeserializeSplitEntry = new string[] { ",," };
 
     private const float c_fButtonStartPosition = 24.0f;
-    private const float c_fButtonHeight = 32.0f;
+    private const float c_fButtonHeight = 16.0f;
     private const float c_fSrollbarWidth = 15.0f;
-    private const float c_fFavoriteButtonWidth = 20.0f;
+    private const float c_fFavoriteButtonWidth = 22.0f;
     private const string c_sFavoriteStarFilled = " \u2605";
     private static readonly Color c_cHover = new Color32(95, 140, 226, 255);
     private static readonly Color c_cDefault = new Color32(32, 32, 32, 255);
@@ -47,7 +48,7 @@ public class EditorFindEditorTools : EditorWindow, IHasCustomMenu
 
     //
 
-    [MenuItem(c_sToolPath, false, c_iToolPriority)]
+    [MenuItem(c_sToolPath, isValidateFunction: false, priority: c_iToolPriority)]
     public static void FindTool()
     {
         EditorFindEditorTools window = EditorWindow.GetWindow<EditorFindEditorTools>();
@@ -142,8 +143,16 @@ public class EditorFindEditorTools : EditorWindow, IHasCustomMenu
                 rectPosition.width - (bScrollbar ? c_fSrollbarWidth : 0.0f) - c_fFavoriteButtonWidth,
                 c_fButtonHeight - 1.0f
             );
+
             EditorGUI.DrawRect(rect, bSelected ? c_cHover : c_cDefault);
+            EditorGUI.indentLevel++;
+
+            float fIndentation = EditorGUI.IndentedRect(rect).x - rect.x;
+            m_guiStyleHover.fixedWidth = rect.width - fIndentation;
+            m_guiStyleDefault.fixedWidth = rect.width - fIndentation;
+
             EditorGUI.LabelField(rect, sCommand, bSelected ? m_guiStyleHover : m_guiStyleDefault);
+            EditorGUI.indentLevel--;
 
             bool bFavorite = this.IsFavorite(sCommand);
             Rect rectFavorite = new Rect(0.0f, c_fButtonStartPosition + j * c_fButtonHeight, c_fFavoriteButtonWidth, c_fButtonHeight - 1.0f);
@@ -165,10 +174,12 @@ public class EditorFindEditorTools : EditorWindow, IHasCustomMenu
         this.Load();
         this.RecreateCommandList();
 
-        m_guiStyleDefault.alignment = TextAnchor.MiddleCenter;
+        m_guiStyleDefault.clipping = TextClipping.Clip;
+        m_guiStyleDefault.alignment = TextAnchor.MiddleLeft;
         m_guiStyleDefault.normal.textColor = Color.grey;
 
-        m_guiStyleHover.alignment = TextAnchor.MiddleCenter;
+        m_guiStyleHover.clipping = TextClipping.Clip;
+        m_guiStyleHover.alignment = TextAnchor.MiddleLeft;
         m_guiStyleHover.normal.textColor = Color.black;
 
         m_guiStyleFavorite.alignment = TextAnchor.MiddleLeft;
