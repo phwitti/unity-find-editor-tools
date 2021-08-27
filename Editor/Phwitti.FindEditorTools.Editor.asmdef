@@ -1,8 +1,7 @@
 {
     "name": "Phwitti.FindEditorTools.Editor",
-    "references": [
-        "GUID:00dd375fb5604da41bb47ce1537a228b"
-    ],
+    "rootNamespace": "",
+    "references": [],
     "includePlatforms": [
         "Editor"
     ],

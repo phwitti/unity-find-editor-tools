@@ -1,6 +1,6 @@
 {
   "name": "com.phwitti.unity-find-editor-tools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "FindEditorTools",
   "description": "Find Editor Tools (Ctrl+T)",
   "unity": "2019.1",
@@ -8,5 +8,6 @@
     "name": "Philipp M. Wittershagen",
     "email": "philippwittershagen@phwitti.com",
     "url": "https://www.phwitti.com"
-  }
+  },
+  "type": "tool"
 }
