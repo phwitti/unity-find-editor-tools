@@ -7,6 +7,12 @@ Due to thousands of Editor-Tools in our projects at Mimimi Games, we needed a wa
 - Search & Execute Menu Items
 - Automatically 'Rates' items that are used more often and pushes them to the top
 - One can additionally Pin/Favorite items, so they're always shown at the top
+- One of the most important unique features is this tools' speed. There are many similar tools (including the built-in one in more recent unity-versions) which also include assets and other things, that are left out of this one on purpose, as one wants to open the palette and run tools in an instant -- not waiting seconds first for the palette to open (especially on large projects).
+
+## Usage
+- Press Ctrl+T
+- Type the name of your Menu-Item
+- Press Enter
 
 ![Image of find-editor-tools](https://phwitti.com/files/find-editor-tools-preview-20210827.gif)
 
