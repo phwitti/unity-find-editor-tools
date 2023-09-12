@@ -14,7 +14,7 @@ namespace Phwitti.FindEditorTools
         private const string c_sToolPath = "Help/Find Editor Tools %t";
         private const int c_iToolPriority = 2000;
 
-#if UNITY_2022_1_OR_NEWER
+#if UNITY_2022_3_OR_NEWER
         private const string c_sToolbarSearchTextFieldStyleName = "ToolbarSearchTextField";
         private const string c_sToolbarSearchCancelButtonStyleName = "ToolbarSearchCancelButton";
 #else
