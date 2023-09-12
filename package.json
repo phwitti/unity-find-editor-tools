@@ -1,6 +1,6 @@
 {
   "name": "com.phwitti.unity-find-editor-tools",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "displayName": "FindEditorTools",
   "description": "Find Editor Tools (Ctrl+T)",
   "unity": "2019.1",
