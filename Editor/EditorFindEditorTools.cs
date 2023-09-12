@@ -14,6 +14,14 @@ namespace Phwitti.FindEditorTools
         private const string c_sToolPath = "Help/Find Editor Tools %t";
         private const int c_iToolPriority = 2000;
 
+#if UNITY_2022_1_OR_NEWER
+        private const string c_sToolbarSearchTextFieldStyleName = "ToolbarSearchTextField";
+        private const string c_sToolbarSearchCancelButtonStyleName = "ToolbarSearchCancelButton";
+#else
+        private const string c_sToolbarSearchTextFieldStyleName = "ToolbarSeachTextField";
+        private const string c_sToolbarSearchCancelButtonStyleName = "ToolbarSeachCancelButton";
+#endif
+
         //
 
         private const string c_sEditorPrefsPath = "com.phwitti.unity-find-editor-tools";
@@ -81,9 +89,9 @@ namespace Phwitti.FindEditorTools
                     const string sFindSearchFieldControlName = "FindEditorToolsSearchField";
 
                     GUI.SetNextControlName(sFindSearchFieldControlName);
-                    m_sSearchString = EditorGUILayout.TextField(m_sSearchString, GUI.skin.FindStyle("ToolbarSeachTextField"));
+                    m_sSearchString = EditorGUILayout.TextField(m_sSearchString, GUI.skin.FindStyle(c_sToolbarSearchTextFieldStyleName));
 
-                    if (GUILayout.Button(string.Empty, GUI.skin.FindStyle("ToolbarSeachCancelButton")) && m_sSearchString != string.Empty)
+                    if (GUILayout.Button(string.Empty, GUI.skin.FindStyle(c_sToolbarSearchCancelButtonStyleName)) && m_sSearchString != string.Empty)
                     {
                         Event evt = new Event();
                         evt.type = EventType.KeyDown;
