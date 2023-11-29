@@ -232,10 +232,10 @@ namespace Phwitti.FindEditorTools
                 m_lMenuCommandsUsage[iIndex].Count++;
             }
 
-            EditorApplication.ExecuteMenuItem(_sCommand);
-
             this.Save();
             this.Close();
+
+            EditorApplication.ExecuteMenuItem(_sCommand);
         }
 
         private InputType UpdateEventBeforeDraw(Event _event)
